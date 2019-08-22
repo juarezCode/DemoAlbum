@@ -5,17 +5,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.mediomelon.demoalbum.R;
-import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
-import com.mediomelon.demoalbum.view.fragments.UserFragment;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
+import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
+import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,11 +26,16 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
+    private ArrayList<User> listUser;
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
     private IUser.IPresenter userPresenter;
     private final static String TAG = "MainActivity";
+
+    public ArrayList<User> getListUser() {
+        return listUser;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
         //setSupportActionBar(toolbar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        loadFragment(new UserFragment());
+
         userPresenter = new UserPresenter(this);
         getUsers();
     }
@@ -75,8 +80,10 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
     }
 
     @Override
-    public void showUsers(List<User> listUser) {
+    public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
+        loadFragment(new UserFragment());
+        this.listUser = listUser;
         Log.e(TAG, "users list: " + listUser.toString());
     }
 
