@@ -8,12 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mediomelon.demoalbum.R;
+
+import com.mediomelon.demoalbum.interfaces.IAlbum;
+import com.mediomelon.demoalbum.model.entity.Album;
+import com.mediomelon.demoalbum.presenter.AlbumPresenter;
+import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
+import com.mediomelon.demoalbum.view.fragments.UserFragment;
+
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
-import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
-import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements IUser.IView {
+public class MainActivity extends AppCompatActivity implements IUser.IView, IAlbum.IView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
@@ -30,8 +36,12 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
-    private IUser.IPresenter userPresenter;
     private final static String TAG = "MainActivity";
+    private IUser.IPresenter userPresenter;
+    private IAlbum.IPresenter albumPresenter;
+    private List<Album> albums;
+    private Gson gson;
+    private Bundle args;
 
     public ArrayList<User> getListUser() {
         return listUser;
@@ -48,7 +58,12 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         userPresenter = new UserPresenter(this);
+        albumPresenter = new AlbumPresenter(this);
+        gson = new Gson();
+        args = new Bundle();
+
         getUsers();
+        getAlbums();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -68,12 +83,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
         return false;
     };
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
-        transaction.commit();
-    }
-
     @Override
     public void getUsers() {
         userPresenter.getUsers();
@@ -90,6 +99,33 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
     @Override
     public void showErrorUsers(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    //>>>>>>>>>>>>>>>>>>>Empieza Albumes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Override
+    public void getAlbums() {
+        albumPresenter.getAlbums();
+    }
+
+    @Override
+    public void showAlbums(List<Album> albums) {
+        this.albums = albums;
+        for(Album album : albums){
+            Log.e(TAG,"Nombre del album : " + album.getTitle());
+        }
+    }
+
+    @Override
+    public void showErrorAlbum(String error) {
+        Log.e(TAG,"Error: " + error);
+    }
+
+    //>>>>>>>>>>>>>>>>>>>Termina Albumes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
+        transaction.commit();
     }
 
     @Override
