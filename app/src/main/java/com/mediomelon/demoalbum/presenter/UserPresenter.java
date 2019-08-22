@@ -4,6 +4,7 @@ import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.UserInteractor;
 import com.mediomelon.demoalbum.model.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserPresenter implements IUser.IPresenter {
@@ -22,7 +23,7 @@ public class UserPresenter implements IUser.IPresenter {
     }
 
     @Override
-    public void showUsers(List<User> listUser) {
+    public void showUsers(ArrayList<User> listUser) {
         userView.showUsers(listUser);
     }
 

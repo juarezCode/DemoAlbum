@@ -5,21 +5,23 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mediomelon.demoalbum.R;
+
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.model.entity.Album;
 import com.mediomelon.demoalbum.presenter.AlbumPresenter;
 import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
 import com.mediomelon.demoalbum.view.fragments.UserFragment;
+
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
+    private ArrayList<User> listUser;
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
@@ -40,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     private Gson gson;
     private Bundle args;
 
+    public ArrayList<User> getListUser() {
+        return listUser;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         //setSupportActionBar(toolbar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        loadFragment(new UserFragment());
 
         userPresenter = new UserPresenter(this);
         albumPresenter = new AlbumPresenter(this);
@@ -83,8 +89,10 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     }
 
     @Override
-    public void showUsers(List<User> listUser) {
+    public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
+        loadFragment(new UserFragment());
+        this.listUser = listUser;
         Log.e(TAG, "users list: " + listUser.toString());
     }
 
