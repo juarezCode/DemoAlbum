@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Demo Album</string>
+    <string name="title_users">Usuarios</string>
+    <string name="title_albums">Álbumes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_album">Fragment Album</string>
+    <string name="fragment_users">Fragment users</string>
+    <string name="cardviewUsers_name">Nombre</string>
+    <string name="cardviewUsers_email">Email</string>
 </resources>
