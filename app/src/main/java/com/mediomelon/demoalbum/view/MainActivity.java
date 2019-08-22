@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,16 +16,18 @@ import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
-import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements IUser.IView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-
-public class MainActivity extends AppCompatActivity implements IUser.IView {
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private IUser.IPresenter userPresenter;
     private final static String TAG = "MainActivity";
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new UserFragment());
