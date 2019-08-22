@@ -1,7 +1,9 @@
 package com.mediomelon.demoalbum.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.model.entity.User;
+import com.mediomelon.demoalbum.view.DetailUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,32 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         //metodoOnclick() para cada elemento del recyclerview
         holder.itemView.setOnClickListener(v -> {
             //envio de datos
+            Intent intent=new Intent(v.getContext(), DetailUserActivity.class);
+
+            String name=listUser.get(position).getName();
+            String username=listUser.get(position).getUsername();
+            String website=listUser.get(position).getWebsite();
+
+            String address= listUser.get(position).getAddress().getCity()
+                    +","+listUser.get(position).getAddress().getStreet()
+                    +","+listUser.get(position).getAddress().getSuite()
+                    +","+listUser.get(position).getAddress().getZipcode();
+
+            String company=listUser.get(position).getCompany().getName();
+            String email=listUser.get(position).getEmail();
+            String phone=listUser.get(position).getPhone();
+            String photo= String.valueOf(listUser.get(position).getPhoto());
+
+            intent.putExtra("name",name);
+            intent.putExtra("username",username);
+            intent.putExtra("website",website);
+            intent.putExtra("address",address);
+            intent.putExtra("company",company);
+            intent.putExtra("email",email);
+            intent.putExtra("phone",phone);
+            intent.putExtra("photo",photo);
+
+            mContext.startActivity(intent);
 
         });
 
