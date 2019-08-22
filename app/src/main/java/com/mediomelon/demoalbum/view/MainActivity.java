@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    //@BindView(R.id.toolbar)
+    //Toolbar toolbar;
 
     private IUser.IPresenter userPresenter;
     private final static String TAG = "MainActivity";
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new UserFragment());
