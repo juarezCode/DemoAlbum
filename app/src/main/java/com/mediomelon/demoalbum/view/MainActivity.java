@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -84,5 +83,11 @@ public class MainActivity extends AppCompatActivity implements IUser.IView {
     @Override
     public void showErrorUsers(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
