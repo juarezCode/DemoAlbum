@@ -4,6 +4,7 @@ import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.model.AlbumInteractor;
 import com.mediomelon.demoalbum.model.entity.Album;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumPresenter implements IAlbum.IPresenter {
@@ -22,7 +23,7 @@ public class AlbumPresenter implements IAlbum.IPresenter {
     }
 
     @Override
-    public void showAlbums(List<Album> albums) {
+    public void showAlbums(ArrayList<Album> albums) {
         albumView.showAlbums(albums);
     }
 
