@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    private ArrayList<User> listUser;
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     private Gson gson;
     private Bundle args;
 
-    public ArrayList<User> getListUser() {
-        return listUser;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         ButterKnife.bind(this);
 
         //setSupportActionBar(toolbar);
-
+        bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         userPresenter = new UserPresenter(this);
@@ -74,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         switch (menuItem.getItemId()) {
             case R.id.navigation_users:
                 fragment = new UserFragment();
+                fragment.setArguments(args);
                 loadFragment(fragment);
                 return true;
 
@@ -93,10 +90,13 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     @Override
     public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
-       // loadFragment(new UserFragment());
-        seleccionFragmentInicial();
-        this.listUser = listUser;
-        Log.e(TAG, "users list: " + listUser.toString());
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        args.putSerializable("listUser", listUser);
+
+        Fragment fragment;
+        fragment = new UserFragment();
+        fragment.setArguments(args);
+        loadFragment(fragment);
     }
 
     @Override
