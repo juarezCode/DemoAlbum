@@ -42,22 +42,22 @@ public class DetailUserActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        String getname = bundle.getString("name");
-        String getusername = bundle.getString("username");
-        String getwebsite = bundle.getString("website");
-        String getaddress = bundle.getString("address");
-        String getcompany = bundle.getString("company");
-        String getemail = bundle.getString("email");
-        String getphone = bundle.getString("phone");
+        String getName = bundle.getString("name");
+        String getUsername = bundle.getString("username");
+        String getWebsite = bundle.getString("website");
+        String getAddress = bundle.getString("address");
+        String getCompany = bundle.getString("company");
+        String getEmail = bundle.getString("email");
+        String getPhone = bundle.getString("phone");
         String image = bundle.getString("photo");
 
-        name.setText(getname);
-        userName.setText(getusername);
-        website.setText(getwebsite);
-        address.setText(getaddress);
-        company.setText(getcompany);
-        email.setText(getemail);
-        phone.setText(getphone);
+        name.setText(getName);
+        userName.setText(getUsername);
+        website.setText(getWebsite);
+        address.setText(getAddress);
+        company.setText(getCompany);
+        email.setText(getEmail);
+        phone.setText(getPhone);
 
         imageViewusers.setImageResource(Integer.parseInt(image));
 
@@ -70,7 +70,6 @@ public class DetailUserActivity extends AppCompatActivity {
                        ya esta en la pila de actividades, en lugar de lanzar una nueva instancia
                        de dicha actividad, el resto de actividades en la pila seran cerradas y se resolvera
                        el intent por la actividad a la que se llamo;*/
-              
                startActivity(new Intent(getBaseContext(), MainActivity.class)
                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                finish();
@@ -80,23 +79,28 @@ public class DetailUserActivity extends AppCompatActivity {
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = menuItem -> {
-        Fragment fragment;
+
         switch (menuItem.getItemId()) {
             case R.id.navigation_users:
+                //ir a la pantalla anterior (MainActivity) con el fragment por default UserFragment
+                Intent intentUsers= new Intent(getBaseContext(), MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                //mandar identificador valorfragment y el valor 0
+                intentUsers.putExtra("valorframent",0);
+                startActivity(intentUsers);
+                finish();
                 return true;
 
             case R.id.navigation_albums:
-                Intent intent=new Intent(DetailUserActivity.this, MainActivity.class);
-                intent.putExtra("valorframent",1);
-                startActivity(intent);
+                //ir a la pantalla anterior (MainActivity) con el fragment por default AlbumFragment
+                Intent intentAlbum=new Intent(DetailUserActivity.this, MainActivity.class);
+                //mandar identificador valorfragment y el valor 2 para inicialiar la pantalla anterior con
+                //el fragment Albumfragment en lugar de Userfragment
+                intentAlbum.putExtra("valorframent",2);
+                startActivity(intentAlbum);
                 finish();
                 return true;
         }
         return false;
     };
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
-        transaction.commit();
-    }
 }
