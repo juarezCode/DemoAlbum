@@ -24,23 +24,23 @@ public class PhotoInteractor implements IPhotos.iModel {
     }
 
     @Override
-    public void getPhotos() {
-        Call<List<Photo>> callPhoto = ServiceClient.createPhotoService().getPhotos("1");
+    public void getPhotos(int id) {
+        Call<List<Photo>> callPhoto = ServiceClient.createPhotoService().getPhotos(id);
         callPhoto.enqueue(new Callback<List<Photo>>() {
             @Override
             public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     photoList = new ArrayList<>();
-                    for(Photo photo : response.body()){
-                       photoList.add(photo);
+                    for (Photo photo : response.body()) {
+                        photoList.add(photo);
 
-                        Log.e(TAG," albumId : "+ photo.getAlbumId());
+                        Log.e(TAG, " albumId : " + photo.getTitle());
                     }
                     photoPresenter.showPhotos(photoList);
                 } else if (response.code() == 401)
-                    photoPresenter.showError("Bad authentication");
+                    photoPresenter.showErrorPhotos("Bad authentication");
                 else if (response.code() == 404)
-                    photoPresenter.showError("Users Not Found");
+                    photoPresenter.showErrorPhotos("Users Not Found");
                 else
                     Log.e(TAG, "Unexpected error");
             }

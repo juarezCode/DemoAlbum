@@ -20,15 +20,17 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.iView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
-
         photosPresenter=new PhotoPresenter(this);
+        Bundle bundle = getIntent().getExtras();
 
-        getPhotos();
+        int id = bundle.getInt("idPhoto");
+        String title = bundle.getString("title");
+        getPhotos(id);
     }
 
     @Override
-    public void getPhotos() {
-        photosPresenter.getPhotos();
+    public void getPhotos(int id) {
+        photosPresenter.getPhotos(id);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.iView{
     }
 
     @Override
-    public void showError(String error) {
+    public void showErrorPhotos(String error) {
         Log.e(TAG,"Error: " + error);
     }
 }

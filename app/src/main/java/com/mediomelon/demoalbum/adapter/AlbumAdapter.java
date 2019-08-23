@@ -1,6 +1,7 @@
 package com.mediomelon.demoalbum.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.model.entity.Album;
+import com.mediomelon.demoalbum.view.PhotosActivity;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     private Context ctx;
     private int count;
 
-    public AlbumAdapter(List<Album> albums, Context ctx){
+    public AlbumAdapter(List<Album> albums, Context ctx) {
         this.albums = albums;
         this.ctx = ctx;
         count = 1;
@@ -32,7 +34,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
-        View view = inflater.inflate(R.layout.cardview_album,viewGroup,false);
+        View view = inflater.inflate(R.layout.cardview_album, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -43,6 +45,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         count++;
         vh.txtNumberAlbum.setText(album.getId() + ".");
         vh.txtNameAlbum.setText(album.getTitle());
+
+        vh.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(ctx, PhotosActivity.class);
+            intent.putExtra("idPhoto", album.getId());
+            intent.putExtra("title", album.getTitle());
+            ctx.startActivity(intent);
+        });
     }
 
     @Override
@@ -59,7 +68,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View v) {
             super(v);
-            ButterKnife.bind(this,v);
+            ButterKnife.bind(this, v);
+
 
         }
     }

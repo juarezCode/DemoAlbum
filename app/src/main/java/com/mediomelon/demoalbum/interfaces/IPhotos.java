@@ -6,17 +6,23 @@ import java.util.ArrayList;
 
 public interface IPhotos {
 
-    interface iModel{
-        void getPhotos();
+    interface iModel {
+        void getPhotos(int id);
     }
-    interface iPresenter{
-        void getPhotos();
+
+    interface iPresenter {
+        void getPhotos(int id);
+
         void showPhotos(ArrayList<Photo> photos);
-        void showError(String error);
+
+        void showErrorPhotos(String error);
     }
-    interface iView{
-        void getPhotos();
+
+    interface iView {
+        void getPhotos(int id);
+
         void showPhotos(ArrayList<Photo> photos);
-        void showError(String error);
+
+        void showErrorPhotos(String error);
     }
 }

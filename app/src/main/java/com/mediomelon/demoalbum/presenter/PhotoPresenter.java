@@ -5,7 +5,6 @@ import com.mediomelon.demoalbum.model.PhotoInteractor;
 import com.mediomelon.demoalbum.model.entity.Photo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PhotoPresenter implements IPhotos.iPresenter {
 
@@ -14,12 +13,12 @@ public class PhotoPresenter implements IPhotos.iPresenter {
 
     public PhotoPresenter(IPhotos.iView photoView) {
         this.photoView = photoView;
-        photoInteractor=new PhotoInteractor(this);
+        photoInteractor = new PhotoInteractor(this);
     }
 
     @Override
-    public void getPhotos() {
-        photoInteractor.getPhotos();
+    public void getPhotos(int id) {
+        photoInteractor.getPhotos(id);
     }
 
     @Override
@@ -28,7 +27,7 @@ public class PhotoPresenter implements IPhotos.iPresenter {
     }
 
     @Override
-    public void showError(String error) {
-        photoView.showError(error);
+    public void showErrorPhotos(String error) {
+        photoView.showErrorPhotos(error);
     }
 }

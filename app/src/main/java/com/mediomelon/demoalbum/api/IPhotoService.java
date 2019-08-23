@@ -11,5 +11,5 @@ import retrofit2.http.Query;
 public interface IPhotoService {
     //https://jsonplaceholder.typicode.com/photos?albumId={albumId}
     @GET("photos")
-    Call<List<Photo>> getPhotos(@Query("albumId") String albumId);
+    Call<List<Photo>> getPhotos(@Query("albumId") int albumId);
 }
