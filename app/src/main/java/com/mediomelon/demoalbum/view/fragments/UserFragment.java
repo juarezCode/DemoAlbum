@@ -2,6 +2,7 @@ package com.mediomelon.demoalbum.view.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,8 @@ import android.view.ViewGroup;
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.adapter.UserAdapter;
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.view.MainActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +27,16 @@ public class UserFragment extends Fragment {
     @BindView(R.id.recyclerViewUser)
     RecyclerView recyclerViewUser;
     private static final String TAG = "UserFragment";
+    ArrayList<User> listUser;
     public UserFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null)
+            listUser = (ArrayList<User>) getArguments().getSerializable("listUser");
     }
 
     @Override
@@ -39,10 +46,9 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
-        MainActivity activity = (MainActivity) getActivity();
-        Log.e(TAG, activity.getListUser().toString());
-        ArrayList<User> listUser = activity.getListUser();
-
+        Log.e("serializable", listUser.toString());
+        
+        recyclerViewUser.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewUser.setLayoutManager(linearLayoutManager);
