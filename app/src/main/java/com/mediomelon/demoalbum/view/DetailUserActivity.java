@@ -70,6 +70,7 @@ public class DetailUserActivity extends AppCompatActivity {
                        ya esta en la pila de actividades, en lugar de lanzar una nueva instancia
                        de dicha actividad, el resto de actividades en la pila seran cerradas y se resolvera
                        el intent por la actividad a la que se llamo;*/
+              
                startActivity(new Intent(getBaseContext(), MainActivity.class)
                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                finish();
