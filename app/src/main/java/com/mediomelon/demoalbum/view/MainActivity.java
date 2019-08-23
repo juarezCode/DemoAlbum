@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    private ArrayList<User> listUser;
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     private Gson gson;
     private Bundle args;
 
-    public ArrayList<User> getListUser() {
-        return listUser;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         ButterKnife.bind(this);
 
         //setSupportActionBar(toolbar);
-
+        bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         userPresenter = new UserPresenter(this);
@@ -64,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
         getUsers();
         getAlbums();
+
+       // seleccionFragmentInicial();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -72,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         switch (menuItem.getItemId()) {
             case R.id.navigation_users:
                 fragment = new UserFragment();
+                fragment.setArguments(args);
                 loadFragment(fragment);
                 return true;
 
@@ -91,9 +90,13 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     @Override
     public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
-        loadFragment(new UserFragment());
-        this.listUser = listUser;
-        Log.e(TAG, "users list: " + listUser.toString());
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        args.putSerializable("listUser", listUser);
+
+        Fragment fragment;
+        fragment = new UserFragment();
+        fragment.setArguments(args);
+        loadFragment(fragment);
     }
 
     @Override
@@ -132,5 +135,25 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+    /*Inicializar el fragment por defecto Userfragment,
+    e incializar el fragment cuando volvamos a esta pantalla
+    desde DetailsUserActivity por el BottomNavigationView
+    valorfragment valor 0 para el fragment Userfragment
+    valorfragment valor 2 para el fragment Albumfragment*/
+
+    private void seleccionFragmentInicial() {
+        //recibiendo datos de 2da pantalla
+        int valor = getIntent().getIntExtra("valorframent", 0);
+        Fragment fragment = new Fragment();
+        //if elegir fragments a iniciar
+        if(valor == 0){
+            fragment = new UserFragment();
+        }else if (valor == 2){
+            fragment = new AlbumFragment();
+        }
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
+        transaction.commit();
     }
 }

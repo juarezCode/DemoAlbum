@@ -1,6 +1,8 @@
 package com.mediomelon.demoalbum.model.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String id;
     private String name;
     private String username;
@@ -62,7 +64,7 @@ public class User {
         this.photo = photo;
     }
 
-    public class Address {
+    public class Address implements Serializable{
         private String street;
         private String suite;
         private String city;
@@ -92,7 +94,7 @@ public class User {
         }
     }
 
-    public class Company {
+    public class Company implements Serializable{
         private String name;
         private String catchPhrase;
         private String bs;
