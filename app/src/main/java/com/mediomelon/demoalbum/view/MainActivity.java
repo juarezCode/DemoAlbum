@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
         getUsers();
         getAlbums();
+
+       // seleccionFragmentInicial();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -91,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     @Override
     public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
-        loadFragment(new UserFragment());
+       // loadFragment(new UserFragment());
+        seleccionFragmentInicial();
         this.listUser = listUser;
         Log.e(TAG, "users list: " + listUser.toString());
     }
@@ -132,5 +135,25 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+    /*Inicializar el fragment por defecto Userfragment,
+    e incializar el fragment cuando volvamos a esta pantalla
+    desde DetailsUserActivity por el BottomNavigationView
+    valorfragment valor 0 para el fragment Userfragment
+    valorfragment valor 2 para el fragment Albumfragment*/
+
+    private void seleccionFragmentInicial() {
+        //recibiendo datos de 2da pantalla
+        int valor = getIntent().getIntExtra("valorframent", 0);
+        Fragment fragment = new Fragment();
+        //if elegir fragments a iniciar
+        if(valor == 0){
+            fragment = new UserFragment();
+        }else if (valor == 2){
+            fragment = new AlbumFragment();
+        }
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
+        transaction.commit();
     }
 }
