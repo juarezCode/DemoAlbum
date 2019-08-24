@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,20 +34,16 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNavigationView;
-    private ArrayList<User> listUser;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
     private final static String TAG = "MainActivity";
     private IUser.IPresenter userPresenter;
     private IAlbum.IPresenter albumPresenter;
-    private List<Album> albums;
     private Gson gson;
     private Bundle args;
-
-    public ArrayList<User> getListUser() {
-        return listUser;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         ButterKnife.bind(this);
 
         //setSupportActionBar(toolbar);
-
+        bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         userPresenter = new UserPresenter(this);
@@ -74,11 +72,13 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         switch (menuItem.getItemId()) {
             case R.id.navigation_users:
                 fragment = new UserFragment();
+                fragment.setArguments(args);
                 loadFragment(fragment);
                 return true;
 
             case R.id.navigation_albums:
                 fragment = new AlbumFragment();
+                fragment.setArguments(args);
                 loadFragment(fragment);
                 return true;
         }
@@ -93,10 +93,13 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     @Override
     public void showUsers(ArrayList<User> listUser) {
         //lista de usuarios
-       // loadFragment(new UserFragment());
-        seleccionFragmentInicial();
-        this.listUser = listUser;
-        Log.e(TAG, "users list: " + listUser.toString());
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        args.putSerializable("listUser", listUser);
+
+        Fragment fragment;
+        fragment = new UserFragment();
+        fragment.setArguments(args);
+        loadFragment(fragment);
     }
 
     @Override
@@ -111,8 +114,14 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     }
 
     @Override
-    public void showAlbums(List<Album> albums) {
-        this.albums = albums;
+    public void showAlbums(ArrayList<Album> albums) {
+        progressBar.setVisibility(View.GONE);
+        //Fragment
+        //fragment = new AlbumFragment();
+        args.putSerializable("albums",albums);
+        //fragment.setArguments(args);
+        //loadFragment(fragment);
+
         for(Album album : albums){
             Log.e(TAG,"Nombre del album : " + album.getTitle());
         }
@@ -136,12 +145,13 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         super.onBackPressed();
         finish();
     }
+
     /*Inicializar el fragment por defecto Userfragment,
     e incializar el fragment cuando volvamos a esta pantalla
     desde DetailsUserActivity por el BottomNavigationView
     valorfragment valor 0 para el fragment Userfragment
     valorfragment valor 2 para el fragment Albumfragment*/
-
+    /*
     private void seleccionFragmentInicial() {
         //recibiendo datos de 2da pantalla
         int valor = getIntent().getIntExtra("valorframent", 0);
@@ -155,5 +165,5 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
         transaction.commit();
-    }
+    } */
 }

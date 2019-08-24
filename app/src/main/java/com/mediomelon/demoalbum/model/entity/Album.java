@@ -1,6 +1,8 @@
 package com.mediomelon.demoalbum.model.entity;
 
-public class Album {
+import java.io.Serializable;
+
+public class Album implements Serializable {
 
     private int userId;
     private int id;

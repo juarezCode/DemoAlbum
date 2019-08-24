@@ -8,6 +8,7 @@ import com.mediomelon.demoalbum.api.ServiceClient;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.model.entity.Album;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,6 +19,7 @@ public class AlbumInteractor implements IAlbum.IModel {
 
     private final static String TAG = "AlbumInteractor";
     private IAlbum.IPresenter albumPresenter;
+    private ArrayList<Album> arrayListAlbum;
 
     public AlbumInteractor(IAlbum.IPresenter albumPresenter){
         this.albumPresenter = albumPresenter;
@@ -32,9 +34,13 @@ public class AlbumInteractor implements IAlbum.IModel {
             public void onResponse(Call<List<Album>> call, Response<List<Album>> response) {
                 Gson gson = new Gson();
                 if(response.isSuccessful()){
+                    arrayListAlbum = new ArrayList<>();
                     Log.e(TAG,">>>>>Response albums>>>>>" + gson.toJson(response.body()));
                     assert response.body() != null;
-                    albumPresenter.showAlbums(response.body());
+                    for(Album album : response.body()){
+                        arrayListAlbum.add(album);
+                    }
+                    albumPresenter.showAlbums(arrayListAlbum);
                 }else{
                     if (response.code() == 401) {
                         albumPresenter.showError("Not authorized");
