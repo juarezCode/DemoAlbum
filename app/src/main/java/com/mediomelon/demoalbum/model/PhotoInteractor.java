@@ -13,13 +13,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoInteractor implements IPhotos.iModel {
+public class PhotoInteractor implements IPhotos.IModel {
 
-    private IPhotos.iPresenter photoPresenter;
+    private IPhotos.IPresenter photoPresenter;
     private final static String TAG = "PhotoInteractor";
     private ArrayList<Photo> photoList;
 
-    public PhotoInteractor(IPhotos.iPresenter photoPresenter) {
+    public PhotoInteractor(IPhotos.IPresenter photoPresenter) {
         this.photoPresenter = photoPresenter;
     }
 
@@ -37,6 +37,7 @@ public class PhotoInteractor implements IPhotos.iModel {
                         Log.e(TAG, " albumId : " + photo.getTitle());
                     }
                     photoPresenter.showPhotos(photoList);
+
                 } else if (response.code() == 401)
                     photoPresenter.showErrorPhotos("Bad authentication");
                 else if (response.code() == 404)
@@ -47,7 +48,7 @@ public class PhotoInteractor implements IPhotos.iModel {
 
             @Override
             public void onFailure(Call<List<Photo>> call, Throwable t) {
-
+                photoPresenter.showErrorPhotos(t.toString());
             }
         });
 

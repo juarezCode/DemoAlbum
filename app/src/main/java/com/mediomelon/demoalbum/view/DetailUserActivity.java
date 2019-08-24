@@ -63,17 +63,14 @@ public class DetailUserActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-       back.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-              /*FLAG_ACTIVITY_SINGLE_TOP: si la actividad que se lanza con el intent
-                       ya esta en la pila de actividades, en lugar de lanzar una nueva instancia
-                       de dicha actividad, el resto de actividades en la pila seran cerradas y se resolvera
-                       el intent por la actividad a la que se llamo;*/
-               startActivity(new Intent(getBaseContext(), MainActivity.class)
-                       .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-               finish();
-           }
+       back.setOnClickListener(v -> {
+          /*FLAG_ACTIVITY_SINGLE_TOP: si la actividad que se lanza con el intent
+                   ya esta en la pila de actividades, en lugar de lanzar una nueva instancia
+                   de dicha actividad, el resto de actividades en la pila seran cerradas y se resolvera
+                   el intent por la actividad a la que se llamo;*/
+           startActivity(new Intent(getBaseContext(), MainActivity.class)
+                   .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+           finish();
        });
 
     }
