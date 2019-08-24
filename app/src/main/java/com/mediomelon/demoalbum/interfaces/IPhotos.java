@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public interface IPhotos {
 
-    interface iModel {
+    interface IModel {
         void getPhotos(int id);
     }
 
-    interface iPresenter {
+    interface IPresenter {
         void getPhotos(int id);
 
         void showPhotos(ArrayList<Photo> photos);
@@ -18,7 +18,7 @@ public interface IPhotos {
         void showErrorPhotos(String error);
     }
 
-    interface iView {
+    interface IView {
         void getPhotos(int id);
 
         void showPhotos(ArrayList<Photo> photos);

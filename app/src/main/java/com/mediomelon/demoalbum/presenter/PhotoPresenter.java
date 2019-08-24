@@ -6,12 +6,12 @@ import com.mediomelon.demoalbum.model.entity.Photo;
 
 import java.util.ArrayList;
 
-public class PhotoPresenter implements IPhotos.iPresenter {
+public class PhotoPresenter implements IPhotos.IPresenter {
 
-    private IPhotos.iView photoView;
-    private IPhotos.iModel photoInteractor;
+    private IPhotos.IView photoView;
+    private IPhotos.IModel photoInteractor;
 
-    public PhotoPresenter(IPhotos.iView photoView) {
+    public PhotoPresenter(IPhotos.IView photoView) {
         this.photoView = photoView;
         photoInteractor = new PhotoInteractor(this);
     }

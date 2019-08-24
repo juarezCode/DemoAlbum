@@ -1,31 +1,74 @@
 package com.mediomelon.demoalbum.view;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
+import com.mediomelon.demoalbum.adapter.PhotoAdapter;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.presenter.PhotoPresenter;
 
 import java.util.ArrayList;
 
-public class PhotosActivity extends AppCompatActivity implements IPhotos.iView{
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private IPhotos.iPresenter photosPresenter;
+public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
+
+    private IPhotos.IPresenter photosPresenter;
     private final static String TAG = "PhotosActivity";
+
+    @BindView(R.id.recyclerViewPhotos)
+    RecyclerView recyclerViewPhoto;
+    @BindView(R.id.progressBarPhotos)
+    ProgressBar progressBar;
+    @BindView(R.id.textViewtitle)
+    TextView textViewtitle;
+    @BindView(R.id.btn_back)
+    ImageButton btnBack;
+
+    String title;
+
+    ArrayList<Photo> listPhoto;
+    PhotoAdapter photoAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
-        photosPresenter=new PhotoPresenter(this);
+        ButterKnife.bind(this);
+
+        btnBack.setVisibility(View.VISIBLE);
+
+        photosPresenter = new PhotoPresenter(this);
         Bundle bundle = getIntent().getExtras();
 
         int id = bundle.getInt("idPhoto");
-        String title = bundle.getString("title");
+        title= bundle.getString("title");
+
         getPhotos(id);
+
+        btnBack.setOnClickListener(v -> {
+          /*FLAG_ACTIVITY_SINGLE_TOP: si la actividad que se lanza con el intent
+                   ya esta en la pila de actividades, en lugar de lanzar una nueva instancia
+                   de dicha actividad, el resto de actividades en la pila seran cerradas y se resolvera
+                   el intent por la actividad a la que se llamo;*/
+            startActivity(new Intent(getBaseContext(), MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            finish();
+        });
+
     }
 
     @Override
@@ -35,11 +78,23 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.iView{
 
     @Override
     public void showPhotos(ArrayList<Photo> photos) {
+        progressBar.setVisibility(View.GONE);
+        textViewtitle.setText(title);
+        listPhoto = new ArrayList<>();
+        photoAdapter = new PhotoAdapter(this, listPhoto);
 
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 3);
+
+        recyclerViewPhoto.setLayoutManager(layoutManager);
+        recyclerViewPhoto.setAdapter(photoAdapter);
+
+        listPhoto.addAll(photos);
+        photoAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showErrorPhotos(String error) {
-        Log.e(TAG,"Error: " + error);
+        Log.e(TAG, "Error: " + error);
     }
 }
