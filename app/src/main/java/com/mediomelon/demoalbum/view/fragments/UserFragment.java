@@ -28,6 +28,7 @@ public class UserFragment extends Fragment {
     RecyclerView recyclerViewUser;
     private static final String TAG = "UserFragment";
     ArrayList<User> listUser;
+
     public UserFragment() {
         // Required empty public constructor
     }
@@ -35,7 +36,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null)
+        if (getArguments() != null)
             listUser = (ArrayList<User>) getArguments().getSerializable("listUser");
     }
 
@@ -46,8 +47,8 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
-        Log.e("serializable", listUser.toString());
-        
+        Log.e(TAG, listUser.toString());
+
         recyclerViewUser.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

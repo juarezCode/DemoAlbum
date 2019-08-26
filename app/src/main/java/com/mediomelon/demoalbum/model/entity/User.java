@@ -13,7 +13,7 @@ public class User implements Serializable {
     private String phone;
     private int photo;
 
-    public User(String id, String name, String username, String website, Address address, Company company, String email, String phone) {
+    public User(String id, String name, String username, String website, Address address, Company company, String email) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -21,7 +21,6 @@ public class User implements Serializable {
         this.address = address;
         this.company = company;
         this.email = email;
-        this.phone = phone;
     }
 
     public String getId() {
@@ -64,7 +63,7 @@ public class User implements Serializable {
         this.photo = photo;
     }
 
-    public class Address implements Serializable{
+    public class Address implements Serializable {
         private String street;
         private String suite;
         private String city;
@@ -94,15 +93,11 @@ public class User implements Serializable {
         }
     }
 
-    public class Company implements Serializable{
+    public class Company implements Serializable {
         private String name;
-        private String catchPhrase;
-        private String bs;
 
-        public Company(String name, String catchPhrase, String bs) {
+        public Company(String name) {
             this.name = name;
-            this.catchPhrase = catchPhrase;
-            this.bs = bs;
         }
 
         public String getName() {

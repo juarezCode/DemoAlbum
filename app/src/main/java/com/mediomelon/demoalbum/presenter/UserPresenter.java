@@ -5,12 +5,10 @@ import com.mediomelon.demoalbum.model.UserInteractor;
 import com.mediomelon.demoalbum.model.entity.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserPresenter implements IUser.IPresenter {
     private IUser.IView userView;
     private IUser.IModel userInteractor;
-    private final static String TAG = "UserPresenter";
 
     public UserPresenter(IUser.IView userView) {
         this.userView = userView;
