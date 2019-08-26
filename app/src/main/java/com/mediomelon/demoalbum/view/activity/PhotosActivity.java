@@ -1,4 +1,4 @@
-package com.mediomelon.demoalbum.view;
+package com.mediomelon.demoalbum.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +36,8 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
     TextView textViewtitle;
     @BindView(R.id.btn_back)
     ImageButton btnBack;
+    @BindView(R.id.title_toolbar)
+    TextView titleToolbar;
 
     String title;
 
@@ -48,14 +50,15 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
         ButterKnife.bind(this);
+        photosPresenter = new PhotoPresenter(this);
 
         btnBack.setVisibility(View.VISIBLE);
+        titleToolbar.setText("Fotos");
 
-        photosPresenter = new PhotoPresenter(this);
         Bundle bundle = getIntent().getExtras();
 
         int id = bundle.getInt("idPhoto");
-        title= bundle.getString("title");
+        title = bundle.getString("title");
 
         getPhotos(id);
 

@@ -1,4 +1,4 @@
-package com.mediomelon.demoalbum.view;
+package com.mediomelon.demoalbum.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;

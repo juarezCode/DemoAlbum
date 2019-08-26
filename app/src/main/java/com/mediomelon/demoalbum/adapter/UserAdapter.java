@@ -3,7 +3,6 @@ package com.mediomelon.demoalbum.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.view.DetailUserActivity;
+import com.mediomelon.demoalbum.view.activity.DetailUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
