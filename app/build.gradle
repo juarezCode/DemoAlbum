@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.sonarqube'
 
 android {
     compileSdkVersion 28
@@ -14,6 +15,16 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+    sonarqube {
+        properties {
+            property "sonar.projectName", "DemoAlbum"
+            property "sonar.projectKey", "DemoAlbum"
+            property "sonar.sources", "src/main/java"
+            property "sonar.language", "java"
+            property "sonar.sourceEncoding", "UTF-8"
+//        property "sonar.exclusions", "src/main/java/com/foo/Foo.java"
+        }
     }
     buildTypes {
         release {
