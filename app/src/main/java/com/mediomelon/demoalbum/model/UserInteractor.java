@@ -16,7 +16,7 @@ import retrofit2.Response;
 
 public class UserInteractor implements IUser.IModel {
     private IUser.IPresenter userPresenter;
-    private final static String TAG = "UserInteractor";
+    private static final String TAG = "UserInteractor";
     private ArrayList<User> listUser;
 
     public UserInteractor(IUser.IPresenter userPresenter) {
