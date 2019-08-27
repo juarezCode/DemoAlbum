@@ -54,7 +54,7 @@ public class AlbumInteractor implements IAlbum.IModel {
 
             @Override
             public void onFailure(Call<List<Album>> call, Throwable t) {
-
+                albumPresenter.showError(t.toString());
             }
         });
     }

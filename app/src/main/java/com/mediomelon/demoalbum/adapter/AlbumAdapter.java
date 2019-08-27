@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.model.entity.Album;
-import com.mediomelon.demoalbum.view.PhotosActivity;
+import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 
 import java.util.List;
 

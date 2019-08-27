@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.model.entity.Photo;
-import com.mediomelon.demoalbum.view.PhotosActivity;
+import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,7 +35,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.myViewHolder
     public void onBindViewHolder(@NonNull final myViewHolder holder, final int i) {
         Photo actores = actoresList.get(i);
 
-        Picasso.get().load("" + actores.getUrl()).placeholder(R.drawable.progresbar).
+        Picasso.get().load("" + actores.getUrl())
+                .placeholder(R.drawable.ic_download).
                 error(R.drawable.girl_1).fit().centerInside()
                 .into(holder.imagebanner);
 

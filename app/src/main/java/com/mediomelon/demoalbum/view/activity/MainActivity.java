@@ -1,4 +1,4 @@
-package com.mediomelon.demoalbum.view;
+package com.mediomelon.demoalbum.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -10,21 +10,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.mediomelon.demoalbum.R;
-
 import com.mediomelon.demoalbum.interfaces.IAlbum;
+import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.Album;
+import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.AlbumPresenter;
+import com.mediomelon.demoalbum.presenter.UserPresenter;
 import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
 import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
-import com.mediomelon.demoalbum.interfaces.IUser;
-import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.presenter.UserPresenter;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,10 +35,9 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
 
-    private final static String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     private IUser.IPresenter userPresenter;
     private IAlbum.IPresenter albumPresenter;
-    private Gson gson;
     private Bundle args;
 
     @Override
@@ -50,20 +45,17 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        userPresenter = new UserPresenter(this);
+        albumPresenter = new AlbumPresenter(this);
 
-        //setSupportActionBar(toolbar);
+        //BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        userPresenter = new UserPresenter(this);
-        albumPresenter = new AlbumPresenter(this);
-        gson = new Gson();
         args = new Bundle();
 
         getUsers();
         getAlbums();
-
-       // seleccionFragmentInicial();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
