@@ -88,21 +88,15 @@ public class DetailUserActivity extends AppCompatActivity {
 
         switch (menuItem.getItemId()) {
             case R.id.navigation_users:
-                //ir a la pantalla anterior (MainActivity) con el fragment por default UserFragment
-                Intent intentUsers = new Intent(getBaseContext(), MainActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                //mandar identificador valorfragment y el valor 0
-                intentUsers.putExtra("valorframent", 0);
-                startActivity(intentUsers);
                 finish();
                 return true;
 
             case R.id.navigation_albums:
                 //ir a la pantalla anterior (MainActivity) con el fragment por default AlbumFragment
                 Intent intentAlbum = new Intent(DetailUserActivity.this, MainActivity.class);
-                //mandar identificador valorfragment y el valor 2 para inicialiar la pantalla anterior con
+                //mandar identificador valorfragment y el valor 1 para inicialiar la pantalla anterior con
                 //el fragment Albumfragment en lugar de Userfragment
-                intentAlbum.putExtra("valorframent", 2);
+                intentAlbum.putExtra("valorframent", 1);
                 startActivity(intentAlbum);
                 finish();
                 return true;
