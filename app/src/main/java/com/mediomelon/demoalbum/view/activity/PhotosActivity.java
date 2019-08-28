@@ -2,6 +2,7 @@ package com.mediomelon.demoalbum.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +39,8 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
     ImageButton btnBack;
     @BindView(R.id.title_toolbar)
     TextView titleToolbar;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
     String title;
 
@@ -71,7 +74,7 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
             finish();
         });
-
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
@@ -100,4 +103,24 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
     public void showErrorPhotos(String error) {
         Log.e(TAG, "Error: " + error);
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = menuItem -> {
+
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_users:
+                //ir a la pantalla anterior (MainActivity) con el fragment por default UserFragment
+                Intent intentUser = new Intent(PhotosActivity.this, MainActivity.class);
+                //mandar identificador valorfragment y el valor 0 para inicialiar la pantalla anterior con
+                //el fragment Userfragment en lugar de AlbumFragment
+                intentUser.putExtra("valorframent", 0);
+                startActivity(intentUser);
+                finish();
+                return true;
+
+            case R.id.navigation_albums:
+                finish();
+                return true;
+        }
+        return false;
+    };
 }

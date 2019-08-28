@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     private IUser.IPresenter userPresenter;
     private IAlbum.IPresenter albumPresenter;
     private Bundle args;
+    private boolean booleanfragmentAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +89,12 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         bottomNavigationView.setVisibility(View.VISIBLE);
         args.putSerializable("listUser", listUser);
 
-        Fragment fragment;
+        /*Fragment fragment;
         fragment = new UserFragment();
         fragment.setArguments(args);
-        loadFragment(fragment);
+        loadFragment(fragment);*/
+        StartFragment(args);
+
     }
 
     @Override
@@ -114,8 +117,15 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         //fragment.setArguments(args);
         //loadFragment(fragment);
 
+        //si booleanfragmentAlbum es verdadero entonces se selecciona el itemdID navigation_albums
+        //del bottonnavigationview para poder inicializar el AlbumFragment
+
+
         for(Album album : albums){
             Log.e(TAG,"Nombre del album : " + album.getTitle());
+        }
+        if (booleanfragmentAlbum) {
+            bottomNavigationView.setSelectedItemId(R.id.navigation_albums);
         }
     }
 
@@ -142,20 +152,18 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     e incializar el fragment cuando volvamos a esta pantalla
     desde DetailsUserActivity por el BottomNavigationView
     valorfragment valor 0 para el fragment Userfragment
-    valorfragment valor 2 para el fragment Albumfragment*/
-    /*
-    private void seleccionFragmentInicial() {
+    valorfragment valor 1 para el fragment Albumfragment*/
+    private void StartFragment(Bundle args) {
         //recibiendo datos de 2da pantalla
         int valor = getIntent().getIntExtra("valorframent", 0);
         Fragment fragment = new Fragment();
         //if elegir fragments a iniciar
-        if(valor == 0){
+        if (valor == 0) {
             fragment = new UserFragment();
-        }else if (valor == 2){
-            fragment = new AlbumFragment();
+            fragment.setArguments(args);
+        } else if (valor == 1) {
+            booleanfragmentAlbum = true;
         }
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_bottom_navigation, fragment);
-        transaction.commit();
-    } */
+        loadFragment(fragment);
+    }
 }
