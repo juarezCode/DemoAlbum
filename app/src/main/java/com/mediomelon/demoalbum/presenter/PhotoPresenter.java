@@ -17,8 +17,8 @@ public class PhotoPresenter implements IPhotos.IPresenter {
     }
 
     @Override
-    public void getPhotos(int id) {
-        photoInteractor.getPhotos(id);
+    public void getPhotos(int albumId) {
+        photoInteractor.getPhotos(albumId);
     }
 
     @Override

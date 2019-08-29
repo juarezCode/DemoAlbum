@@ -1,11 +1,28 @@
 package com.mediomelon.demoalbum.model.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
+
+@Entity(tableName = "photos")
 public class Photo {
+    @ColumnInfo
     private int albumId;
+    @PrimaryKey
+    @NotNull
     private int id;
+    @ColumnInfo
     private String title;
+    @ColumnInfo
     private String url;
+    @ColumnInfo
     private String thumbnailUrl;
+    @ColumnInfo(defaultValue = "pending")
+    private String status;
+    @ColumnInfo
+    private String date;
 
     public Photo(int albumId, int id, String title, String url, String thumbnailUrl) {
         this.albumId = albumId;
@@ -33,5 +50,21 @@ public class Photo {
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

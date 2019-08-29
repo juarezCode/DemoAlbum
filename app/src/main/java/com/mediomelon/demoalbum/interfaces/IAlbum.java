@@ -7,19 +7,27 @@ import java.util.List;
 
 public interface IAlbum {
 
-    interface IModel{
+    interface IRepository{
         void getAlbums();
     }
 
-    interface IPresenter{
+    interface IModel {
         void getAlbums();
+    }
+
+    interface IPresenter {
+        void getAlbums();
+
         void showAlbums(ArrayList<Album> albums);
+
         void showError(String error);
     }
 
-    interface IView{
+    interface IView {
         void getAlbums();
+
         void showAlbums(ArrayList<Album> albums);
+
         void showErrorAlbum(String error);
     }
 }

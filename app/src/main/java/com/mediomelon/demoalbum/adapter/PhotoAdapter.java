@@ -36,8 +36,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.myViewHolder
         Photo actores = actoresList.get(i);
 
         Picasso.get().load("" + actores.getUrl())
-                .placeholder(R.drawable.ic_download).
-                error(R.drawable.girl_1).fit().centerInside()
+                .placeholder(R.drawable.ic_download)
+                .error(R.drawable.ic_img_error).fit().centerInside()
                 .into(holder.imagebanner);
 
     }

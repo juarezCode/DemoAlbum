@@ -5,9 +5,17 @@ import android.util.Log;
 import com.mediomelon.demoalbum.api.ServiceClient;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
+import com.mediomelon.demoalbum.repository.PhotoRepositoryAPI;
+import com.mediomelon.demoalbum.repository.PhotoRepositoryDB;
+import com.mediomelon.demoalbum.view.activity.MainActivity;
+import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,42 +23,28 @@ import retrofit2.Response;
 
 public class PhotoInteractor implements IPhotos.IModel {
 
-    private IPhotos.IPresenter photoPresenter;
-    private final static String TAG = "PhotoInteractor";
-    private ArrayList<Photo> photoList;
+    private static final String TAG = "PhotoInteractor";
+    private IPhotos.IRepository photoRepositoryAPI;
+    private IPhotos.IRepository photoRepositoryDB;
 
     public PhotoInteractor(IPhotos.IPresenter photoPresenter) {
-        this.photoPresenter = photoPresenter;
+        photoRepositoryAPI = new PhotoRepositoryAPI(photoPresenter);
+        photoRepositoryDB = new PhotoRepositoryDB(photoPresenter);
     }
 
     @Override
-    public void getPhotos(int id) {
-        Call<List<Photo>> callPhoto = ServiceClient.createPhotoService().getPhotos(id);
-        callPhoto.enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                if (response.isSuccessful()) {
-                    photoList = new ArrayList<>();
-                    for (Photo photo : response.body()) {
-                        photoList.add(photo);
+    public void getPhotos(int albumId) {
 
-                        Log.e(TAG, " albumId : " + photo.getTitle());
-                    }
-                    photoPresenter.showPhotos(photoList);
+        //consulta, muestra una lista de photos
+        List<Photo> listPhotos = MainActivity.dataBase.photoDao().getPhotosById(albumId);
 
-                } else if (response.code() == 401)
-                    photoPresenter.showErrorPhotos("Bad authentication");
-                else if (response.code() == 404)
-                    photoPresenter.showErrorPhotos("Users Not Found");
-                else
-                    Log.e(TAG, "Unexpected error");
-            }
-
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
-                photoPresenter.showErrorPhotos(t.toString());
-            }
-        });
+        if (listPhotos.size() >= 1) {
+            Log.e(TAG, "traer datos (listPhotos) de => DATABASE");
+            photoRepositoryDB.getPhotos(albumId);
+        } else {
+            Log.e(TAG, "traer datos (listPhotos) de => WEB API");
+            photoRepositoryAPI.getPhotos(albumId);
+        }
 
     }
 }

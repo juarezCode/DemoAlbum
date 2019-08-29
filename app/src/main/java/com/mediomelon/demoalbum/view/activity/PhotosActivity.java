@@ -11,9 +11,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.room.Room;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.adapter.PhotoAdapter;
+import com.mediomelon.demoalbum.dao.DataBase;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.presenter.PhotoPresenter;
@@ -75,8 +79,8 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
     }
 
     @Override
-    public void getPhotos(int id) {
-        photosPresenter.getPhotos(id);
+    public void getPhotos(int albumId) {
+        photosPresenter.getPhotos(albumId);
     }
 
     @Override
@@ -98,6 +102,8 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
 
     @Override
     public void showErrorPhotos(String error) {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         Log.e(TAG, "Error: " + error);
     }
 }

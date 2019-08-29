@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.room.Room;
+
 import com.mediomelon.demoalbum.R;
+import com.mediomelon.demoalbum.dao.DataBase;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.Album;
+import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.AlbumPresenter;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
@@ -21,6 +25,7 @@ import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
 import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     private IUser.IPresenter userPresenter;
     private IAlbum.IPresenter albumPresenter;
     private Bundle args;
+    public static DataBase dataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         ButterKnife.bind(this);
         userPresenter = new UserPresenter(this);
         albumPresenter = new AlbumPresenter(this);
+        dataBase = Room.databaseBuilder(this, DataBase.class, "photoDB").allowMainThreadQueries().build();
 
         //BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
@@ -114,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         //fragment.setArguments(args);
         //loadFragment(fragment);
 
-        for(Album album : albums){
-            Log.e(TAG,"Nombre del album : " + album.getTitle());
-        }
+//        for(Album album : albums){
+//            Log.e(TAG,"Nombre del album : " + album.getTitle());
+//        }
     }
 
     @Override

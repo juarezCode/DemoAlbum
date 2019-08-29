@@ -38,12 +38,8 @@ public class AlbumFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         args = getArguments();
-        if(args != null){
+        if (args != null) {
             arrayListAlbums = (ArrayList<Album>) args.getSerializable("albums");
-            for(int i = 0;i<arrayListAlbums.size();i++){
-                Log.e(TAG,"ArrayList datos: " + arrayListAlbums.get(i).getTitle());
-            }
-
         }
 
     }
@@ -52,15 +48,15 @@ public class AlbumFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_album,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_album, container, false);
+        ButterKnife.bind(this, view);
 
         recyclerViewAlbum.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewAlbum.setLayoutManager(linearLayoutManager);
 
-        albumAdapter = new AlbumAdapter(arrayListAlbums,getContext());
+        albumAdapter = new AlbumAdapter(arrayListAlbums, getContext());
         recyclerViewAlbum.setAdapter(albumAdapter);
 
 

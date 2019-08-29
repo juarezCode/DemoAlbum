@@ -32,11 +32,9 @@
                 android:id="@+id/txtxUserNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:text="@string/cardviewUsers_name"
                 android:textColor="@android:color/black"
                 cardview:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +46,9 @@
                 android:id="@+id/txtxUserCorreo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginBottom="32dp"
                 android:text="@string/cardviewUsers_email"
                 android:textColor="@android:color/black"
@@ -61,6 +57,24 @@
                 cardview:layout_constraintHorizontal_bias="0.0"
                 cardview:layout_constraintStart_toEndOf="@+id/imageViewUsers"
                 cardview:layout_constraintTop_toBottomOf="@+id/txtxUserNombre" />
+
+            <Button
+                android:id="@+id/btnUserEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="edit"
+                cardview:layout_constraintBottom_toBottomOf="parent"
+                cardview:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btnUserDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="DELETE"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
