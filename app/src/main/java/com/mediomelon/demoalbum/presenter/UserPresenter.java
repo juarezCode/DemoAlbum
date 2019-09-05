@@ -1,7 +1,7 @@
 package com.mediomelon.demoalbum.presenter;
 
 import com.mediomelon.demoalbum.interfaces.IUser;
-import com.mediomelon.demoalbum.model.UserInteractor;
+import com.mediomelon.demoalbum.model.interactor.UserInteractor;
 import com.mediomelon.demoalbum.model.entity.User;
 
 import java.util.ArrayList;

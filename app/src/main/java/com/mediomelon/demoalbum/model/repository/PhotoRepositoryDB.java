@@ -1,11 +1,10 @@
-package com.mediomelon.demoalbum.repository;
+package com.mediomelon.demoalbum.model.repository;
 
 import android.util.Log;
 
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.view.activity.MainActivity;
-import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 
 import java.util.ArrayList;
 import java.util.List;

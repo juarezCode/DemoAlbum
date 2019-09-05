@@ -4,11 +4,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.mediomelon.demoalbum.util.Constants;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "albums")
+@Entity(tableName = Constants.TABLE_ALBUM)
 public class Album implements Serializable {
     @ColumnInfo
     private int userId;

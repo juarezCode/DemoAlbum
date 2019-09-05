@@ -1,11 +1,10 @@
 package com.mediomelon.demoalbum.presenter;
 
 import com.mediomelon.demoalbum.interfaces.IAlbum;
-import com.mediomelon.demoalbum.model.AlbumInteractor;
+import com.mediomelon.demoalbum.model.interactor.AlbumInteractor;
 import com.mediomelon.demoalbum.model.entity.Album;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AlbumPresenter implements IAlbum.IPresenter {
 

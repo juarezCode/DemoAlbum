@@ -1,7 +1,6 @@
 package com.mediomelon.demoalbum.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -16,13 +15,13 @@ public interface PhotoDao {
     @Insert
     void addPhoto(Photo photo);
 
-    @Query("select * from photos")
+    @Query("select * from PHOTOS")
     List<Photo> getPhotos();
 
-    @Query("SELECT * FROM photos WHERE id IN (:id)")
+    @Query("SELECT * FROM PHOTOS WHERE photo_id IN (:id)")
     Photo getId(int id);
 
-    @Query("SELECT * FROM photos WHERE albumId IN (:albumId)")
+    @Query("SELECT * FROM PHOTOS WHERE albumId IN (:albumId)")
     List<Photo> getPhotosById(int albumId);
 
     @Update

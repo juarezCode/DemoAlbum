@@ -1,12 +1,12 @@
-package com.mediomelon.demoalbum.repository;
+package com.mediomelon.demoalbum.model.repository;
 
 import android.util.Log;
 
 import com.mediomelon.demoalbum.api.ServiceClient;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
+import com.mediomelon.demoalbum.util.Constants;
 import com.mediomelon.demoalbum.view.activity.MainActivity;
-import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class PhotoRepositoryAPI implements IPhotos.IRepository {
     private ArrayList<Photo> photoList;
     private SimpleDateFormat sdf;
 
-    public PhotoRepositoryAPI(IPhotos.IPresenter presenter){
+    public PhotoRepositoryAPI(IPhotos.IPresenter presenter) {
         this.photoPresenter = presenter;
 
     }
@@ -41,7 +41,7 @@ public class PhotoRepositoryAPI implements IPhotos.IRepository {
                     for (Photo photo : response.body()) {
                         photoList.add(photo);
 
-                        photo.setStatus("Created");//por default el status es created
+                        photo.setStatus(Constants.STATUS_ACTIVE);//por default el status es created
                         String currentDateandTime = sdf.format(new Date());
                         photo.setDate(currentDateandTime);
 

@@ -4,14 +4,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.mediomelon.demoalbum.util.Constants;
+
 import org.jetbrains.annotations.NotNull;
 
-@Entity(tableName = "photos")
+@Entity(tableName = Constants.TABLE_PHOTO)
 public class Photo {
     @ColumnInfo
     private int albumId;
     @PrimaryKey
     @NotNull
+    @ColumnInfo(name = "photo_id")
     private int id;
     @ColumnInfo
     private String title;

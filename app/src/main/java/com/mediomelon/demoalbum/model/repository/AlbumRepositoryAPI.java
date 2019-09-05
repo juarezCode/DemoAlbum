@@ -1,8 +1,7 @@
-package com.mediomelon.demoalbum.repository;
+package com.mediomelon.demoalbum.model.repository;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.mediomelon.demoalbum.api.IAlbumService;
 import com.mediomelon.demoalbum.api.ServiceClient;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
@@ -36,7 +35,6 @@ public class AlbumRepositoryAPI implements IAlbum.IRepository {
         albumDataCall.enqueue(new Callback<List<Album>>() {
             @Override
             public void onResponse(Call<List<Album>> call, Response<List<Album>> response) {
-                Gson gson = new Gson();
                 if (response.isSuccessful()) {
                     arrayListAlbum = new ArrayList<>();
                     //Log.e(TAG, ">>>>>Response albums>>>>>" + gson.toJson(response.body()));

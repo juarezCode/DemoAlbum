@@ -13,9 +13,9 @@ public interface AlbumDao {
     @Insert
     void addAlbum(Album album);
 
-    @Query("SELECT * FROM albums")
+    @Query("SELECT * FROM ALBUMS")
     List<Album> getAlbums();
 
-    @Query("SELECT * FROM albums WHERE id IN (:id)")
+    @Query("SELECT * FROM ALBUMS WHERE id IN (:id)")
     Album getAlbumId(int id);
 }

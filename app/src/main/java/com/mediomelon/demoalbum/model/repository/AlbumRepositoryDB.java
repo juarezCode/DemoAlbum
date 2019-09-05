@@ -1,4 +1,4 @@
-package com.mediomelon.demoalbum.repository;
+package com.mediomelon.demoalbum.model.repository;
 
 import android.util.Log;
 

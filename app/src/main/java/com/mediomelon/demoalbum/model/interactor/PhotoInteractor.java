@@ -1,25 +1,14 @@
-package com.mediomelon.demoalbum.model;
+package com.mediomelon.demoalbum.model.interactor;
 
 import android.util.Log;
 
-import com.mediomelon.demoalbum.api.ServiceClient;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
-import com.mediomelon.demoalbum.repository.PhotoRepositoryAPI;
-import com.mediomelon.demoalbum.repository.PhotoRepositoryDB;
+import com.mediomelon.demoalbum.model.repository.PhotoRepositoryAPI;
+import com.mediomelon.demoalbum.model.repository.PhotoRepositoryDB;
 import com.mediomelon.demoalbum.view.activity.MainActivity;
-import com.mediomelon.demoalbum.view.activity.PhotosActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PhotoInteractor implements IPhotos.IModel {
 
@@ -38,7 +27,7 @@ public class PhotoInteractor implements IPhotos.IModel {
         //consulta, muestra una lista de photos
         List<Photo> listPhotos = MainActivity.dataBase.photoDao().getPhotosById(albumId);
 
-        if (listPhotos.size() >= 1) {
+        if (!listPhotos.isEmpty()) {
             Log.e(TAG, "traer datos (listPhotos) de => DATABASE");
             photoRepositoryDB.getPhotos(albumId);
         } else {

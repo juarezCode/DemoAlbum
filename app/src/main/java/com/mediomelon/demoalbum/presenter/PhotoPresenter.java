@@ -1,7 +1,7 @@
 package com.mediomelon.demoalbum.presenter;
 
 import com.mediomelon.demoalbum.interfaces.IPhotos;
-import com.mediomelon.demoalbum.model.PhotoInteractor;
+import com.mediomelon.demoalbum.model.interactor.PhotoInteractor;
 import com.mediomelon.demoalbum.model.entity.Photo;
 
 import java.util.ArrayList;

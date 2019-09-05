@@ -17,15 +17,14 @@ import com.mediomelon.demoalbum.dao.DataBase;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.Album;
-import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.AlbumPresenter;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
+import com.mediomelon.demoalbum.util.Constants;
 import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
 import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         ButterKnife.bind(this);
         userPresenter = new UserPresenter(this);
         albumPresenter = new AlbumPresenter(this);
-        dataBase = Room.databaseBuilder(this, DataBase.class, "photoDB").allowMainThreadQueries().build();
+        dataBase = Room.databaseBuilder(this, DataBase.class, Constants.NAME_DB).allowMainThreadQueries().build();
 
         //BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         progressBar.setVisibility(View.GONE);
         //Fragment
         //fragment = new AlbumFragment();
-        args.putSerializable("albums",albums);
+        args.putSerializable("albums", albums);
         //fragment.setArguments(args);
         //loadFragment(fragment);
 
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @Override
     public void showErrorAlbum(String error) {
-        Log.e(TAG,"Error: " + error);
+        Log.e(TAG, "Error: " + error);
     }
 
     //>>>>>>>>>>>>>>>>>>>Termina Albumes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
