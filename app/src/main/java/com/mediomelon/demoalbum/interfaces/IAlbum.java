@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface IAlbum {
 
+    interface IRepository{
+        void getAlbums();
+    }
+
     interface IModel{
         void getAlbums();
     }

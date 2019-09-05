@@ -1,7 +1,15 @@
 package com.mediomelon.demoalbum.model.entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "photos")
 public class Photo {
+
     private int albumId;
+    @PrimaryKey
+    @NonNull
     private int id;
     private String title;
     private String url;

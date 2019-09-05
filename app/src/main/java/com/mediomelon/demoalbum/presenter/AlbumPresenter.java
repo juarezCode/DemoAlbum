@@ -1,20 +1,23 @@
 package com.mediomelon.demoalbum.presenter;
 
+import android.content.Context;
+
 import com.mediomelon.demoalbum.interfaces.IAlbum;
-import com.mediomelon.demoalbum.model.AlbumInteractor;
+import com.mediomelon.demoalbum.model.interactor.AlbumInteractor;
 import com.mediomelon.demoalbum.model.entity.Album;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AlbumPresenter implements IAlbum.IPresenter {
 
     private IAlbum.IView albumView;
     private IAlbum.IModel albumInteractor;
+    private Context ctx;
 
-    public AlbumPresenter(IAlbum.IView albumView){
+    public AlbumPresenter(IAlbum.IView albumView,Context ctx){
         this.albumView = albumView;
-        albumInteractor = new AlbumInteractor(this);
+        this.ctx = ctx;
+        albumInteractor = new AlbumInteractor(this,this.ctx);
     }
 
     @Override

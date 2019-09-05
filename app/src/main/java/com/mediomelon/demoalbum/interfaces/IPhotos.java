@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public interface IPhotos {
 
+    interface IRepository{
+        void getPhotos(int id);
+    }
+
     interface IModel {
         void getPhotos(int id);
     }

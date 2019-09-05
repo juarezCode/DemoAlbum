@@ -1,15 +1,17 @@
 package com.mediomelon.demoalbum.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.interfaces.IUser;
@@ -45,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        userPresenter = new UserPresenter(this);
-        albumPresenter = new AlbumPresenter(this);
+        userPresenter = new UserPresenter(this,getApplicationContext());
+        albumPresenter = new AlbumPresenter(this,getApplicationContext());
 
         //BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);

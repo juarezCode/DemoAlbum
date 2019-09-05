@@ -1,10 +1,13 @@
-package com.mediomelon.demoalbum.model;
+package com.mediomelon.demoalbum.model.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.mediomelon.demoalbum.api.IAlbumService;
 import com.mediomelon.demoalbum.api.ServiceClient;
+import com.mediomelon.demoalbum.dao.AlbumDao;
+import com.mediomelon.demoalbum.dao.AlbumDatabase;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.model.entity.Album;
 
@@ -15,14 +18,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AlbumInteractor implements IAlbum.IModel {
+public class AlbumRepositoryAPI implements IAlbum.IRepository {
 
-    private final static String TAG = "AlbumInteractor";
+    private static final String TAG = "AlbumRepositoryAPI";
     private IAlbum.IPresenter albumPresenter;
+    private List<Album> albums;
+    private AlbumDatabase albumDatabase;
+    private Context ctx;
     private ArrayList<Album> arrayListAlbum;
 
-    public AlbumInteractor(IAlbum.IPresenter albumPresenter){
+    public AlbumRepositoryAPI(IAlbum.IPresenter albumPresenter, Context ctx){
         this.albumPresenter = albumPresenter;
+        this.ctx = ctx;
+        albumDatabase = AlbumDatabase.getDatabase(this.ctx);
     }
 
     @Override
@@ -38,6 +46,7 @@ public class AlbumInteractor implements IAlbum.IModel {
                     Log.e(TAG,">>>>>Response albums>>>>>" + gson.toJson(response.body()));
                     assert response.body() != null;
                     for(Album album : response.body()){
+                        albumDatabase.albumDao().addAlbum(album);
                         arrayListAlbum.add(album);
                     }
                     albumPresenter.showAlbums(arrayListAlbum);

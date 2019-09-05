@@ -5,6 +5,11 @@ import com.mediomelon.demoalbum.model.entity.User;
 import java.util.ArrayList;
 
 public interface IUser {
+
+    interface IRepository {
+        void getUsers();
+    }
+
     interface IModel {
         void getUsers();
 

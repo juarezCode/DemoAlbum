@@ -2,15 +2,16 @@ package com.mediomelon.demoalbum.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.adapter.PhotoAdapter;
@@ -50,7 +51,7 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
         ButterKnife.bind(this);
-        photosPresenter = new PhotoPresenter(this);
+        photosPresenter = new PhotoPresenter(this,getApplicationContext());
 
         btnBack.setVisibility(View.VISIBLE);
         titleToolbar.setText("Fotos");

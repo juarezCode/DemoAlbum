@@ -1,8 +1,10 @@
-package com.mediomelon.demoalbum.model;
+package com.mediomelon.demoalbum.model.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.mediomelon.demoalbum.api.ServiceClient;
+import com.mediomelon.demoalbum.dao.AlbumDatabase;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
 
@@ -13,15 +15,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoInteractor implements IPhotos.IModel {
-
-    private IPhotos.IPresenter photoPresenter;
-    private final static String TAG = "PhotoInteractor";
+public class PhotoRepositoryAPI implements IPhotos.IRepository {
+    private static final String TAG = "PhotoRepositoryAPI";
     private ArrayList<Photo> photoList;
+    private IPhotos.IPresenter photoPresenter;
+    private Context ctx;
+    private AlbumDatabase albumDatabase;
 
-    public PhotoInteractor(IPhotos.IPresenter photoPresenter) {
+    public PhotoRepositoryAPI(IPhotos.IPresenter photoPresenter, Context ctx){
         this.photoPresenter = photoPresenter;
+        this.ctx = ctx;
+        albumDatabase = AlbumDatabase.getDatabase(this.ctx);
     }
+
 
     @Override
     public void getPhotos(int id) {
@@ -33,7 +39,7 @@ public class PhotoInteractor implements IPhotos.IModel {
                     photoList = new ArrayList<>();
                     for (Photo photo : response.body()) {
                         photoList.add(photo);
-
+                        albumDatabase.photoDao().addPhoto(photo);
                         Log.e(TAG, " albumId : " + photo.getTitle());
                     }
                     photoPresenter.showPhotos(photoList);
@@ -51,6 +57,5 @@ public class PhotoInteractor implements IPhotos.IModel {
                 photoPresenter.showErrorPhotos(t.toString());
             }
         });
-
     }
 }
