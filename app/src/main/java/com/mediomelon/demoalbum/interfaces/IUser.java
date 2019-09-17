@@ -12,24 +12,17 @@ public interface IUser {
 
     interface IModel {
         void getUsers();
-
     }
 
     interface IPresenter {
         void getUsers();
-
         void showUsers(ArrayList<User> listUser);
-
         void showErrorUsers(String error);
-
     }
 
     interface IView {
-
         void getUsers();
-
         void showUsers(ArrayList<User> listUser);
-
         void showErrorUsers(String error);
     }
 }

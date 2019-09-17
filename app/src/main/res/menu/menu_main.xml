@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_close_sesion"
+        android:icon="@drawable/ic_img_error"
+        android:title="@string/cerrar_sesion"
+        app:showAsAction="withText"
+        />
+    <item
+        android:id="@+id/item_other"
+        android:icon="@drawable/ic_users"
+        android:title="@string/create_user"
+        app:showAsAction="withText"
+        />
+</menu>

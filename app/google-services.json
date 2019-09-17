@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1089224777000",
+    "firebase_url": "https://album-demo-2cddb.firebaseio.com",
+    "project_id": "album-demo-2cddb",
+    "storage_bucket": "album-demo-2cddb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089224777000:android:5b0d2450acf1d468a4841d",
+        "android_client_info": {
+          "package_name": "com.mediomelon.demoalbum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089224777000-9kl30ae6j1fhk29a755e0fu1ouvd6rn3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mediomelon.demoalbum",
+            "certificate_hash": "987b572d3b3a8932fffa57b872cfa2a79e6c181c"
+          }
+        },
+        {
+          "client_id": "1089224777000-jncfljnpkg3f1d5j9brqcsmb6mpd4n6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJAn2hUBGzoKUEw3ob0bR681tW9H-Fvp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089224777000-jncfljnpkg3f1d5j9brqcsmb6mpd4n6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

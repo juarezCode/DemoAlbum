@@ -3,11 +3,11 @@ package com.mediomelon.demoalbum.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.adapter.UserAdapter;
+import com.mediomelon.demoalbum.dao.AlbumDataBase;
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.util.Constants;
-import com.mediomelon.demoalbum.view.activity.MainActivity;
+import com.mediomelon.demoalbum.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +42,7 @@ public class UserFragment extends Fragment {
     TextView txtEmpty;
     private static final String TAG = "UserFragment";
     ArrayList<User> listUser;
+    private AlbumDataBase albumDataBase;
 
     public UserFragment() {
         // Required empty public constructor
@@ -60,8 +61,9 @@ public class UserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
+        albumDataBase = AlbumDataBase.getDataBase(getContext());
 
-        if(listUser.isEmpty())
+        if (listUser.isEmpty())
             recyclerViewUser.setVisibility(View.GONE);
         else
             txtEmpty.setVisibility(View.GONE);
@@ -79,15 +81,18 @@ public class UserFragment extends Fragment {
             public void onUpdateClick(int position) {
 
                 //obtener objeto a actualizar por el id
-                User user = MainActivity.dataBase.userDao().getUserById(listUser.get(position).getId());
+                //User user = LoginActivity.albumDataBase.userDao().getUserById(listUser.get(position).getId());
+                User user = albumDataBase.userDao().getUserById(listUser.get(position).getId());
 
                 //configuracion cuadro de dialogo
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_user, null);
                 //bindeo de vistas
-                EditText nombre = view.findViewById(R.id.edtNombre);
+
+                TextInputEditText nombre = view.findViewById(R.id.edtNombre);
+                TextInputEditText password = view.findViewById(R.id.edtPassword);
                 EditText email = view.findViewById(R.id.edtEmail);
-                EditText username = view.findViewById(R.id.edtUsername);
+                EditText username = view.findViewById(R.id.edtInsertName);
                 EditText company = view.findViewById(R.id.edtCompany);
                 EditText address = view.findViewById(R.id.edtAddress);
                 EditText website = view.findViewById(R.id.edtWebSite);
@@ -95,9 +100,11 @@ public class UserFragment extends Fragment {
                 Button btnSave = view.findViewById(R.id.btnSave);
                 Button btnCancel = view.findViewById(R.id.btnCancel);
                 //mostrar datos del objeto de DB en vistas
+
                 nombre.setText(user.getName());
                 email.setText(user.getEmail());
                 username.setText(user.getUsername());
+                password.setText(user.getPassword());
                 company.setText(user.getCompany().getName());
                 address.setText(user.getAddress().getStreet());
                 website.setText(user.getWebsite());
@@ -110,6 +117,7 @@ public class UserFragment extends Fragment {
                     if (!nombre.getText().toString().isEmpty() && //validar campos vacios
                             !email.getText().toString().isEmpty() &&
                             !username.getText().toString().isEmpty() &&
+                            !password.getText().toString().isEmpty() &&
                             !company.getText().toString().isEmpty() &&
                             !address.getText().toString().isEmpty() &&
                             !website.getText().toString().isEmpty() &&
@@ -119,13 +127,15 @@ public class UserFragment extends Fragment {
                         user.setName(nombre.getText().toString());
                         user.setEmail(email.getText().toString());
                         user.setUsername(username.getText().toString());
+                        user.setPassword(password.getText().toString());
                         user.getCompany().setName(company.getText().toString());
                         user.getAddress().setStreet(address.getText().toString());
                         user.setWebsite(website.getText().toString());
                         user.setPhone(phone.getText().toString());
 
                         //update object in database and recycler
-                        MainActivity.dataBase.userDao().updateUser(user);
+                        //LoginActivity.albumDataBase.userDao().updateUser(user);
+                        albumDataBase.userDao().updateUser(user);
                         listUser.set(position, user);
                         userAdapter.notifyItemChanged(position);
                         Toast.makeText(getContext(), "successful updated", Toast.LENGTH_SHORT).show();
@@ -145,18 +155,19 @@ public class UserFragment extends Fragment {
             @Override
             public void onDeleteClick(int position) {
                 //obtener objeto a eliminar por el id
-                User user = MainActivity.dataBase.userDao().getUserById(listUser.get(position).getId());
-                //int id = MainActivity.dataBase.userDao().getOnlyUserId(listUser.get(position).getId());
+                //User user = LoginActivity.albumDataBase.userDao().getUserById(listUser.get(position).getId());
+                User user = albumDataBase.userDao().getUserById(listUser.get(position).getId());
 
                 //validacion si el objeto no esta eliminado
                 if (!user.getStatus().equals(Constants.STATUS_DELETED)) {
                     user.setStatus(Constants.STATUS_DELETED);
-                    //MainActivity.dataBase.userDao().deleteUserById(id);
-                    MainActivity.dataBase.userDao().deleteUser(user);
+                    //MainActivity.albumDataBase.userDao().deleteUserById(id);
+                    //LoginActivity.albumDataBase.userDao().deleteUser(user);
+                    albumDataBase.userDao().deleteUser(user);
 
                     //update object in database and recycler
                     listUser.remove(position);
-                    if(listUser.isEmpty()){
+                    if (listUser.isEmpty()) {
                         recyclerViewUser.setVisibility(View.GONE);
                         txtEmpty.setVisibility(View.VISIBLE);
                     }
@@ -172,7 +183,8 @@ public class UserFragment extends Fragment {
         addUser.setOnClickListener(v -> {
 
             //obtener objeto con el id mayor
-            User userMax = MainActivity.dataBase.userDao().getMaxId();
+            //User userMax = LoginActivity.albumDataBase.userDao().getMaxId();
+            User userMax = albumDataBase.userDao().getMaxId();
 
             //configuracion cuadro de dialogo
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
@@ -181,6 +193,7 @@ public class UserFragment extends Fragment {
             EditText addName = vista.findViewById(R.id.edtAddName);
             EditText addEmail = vista.findViewById(R.id.edtAddEmail);
             EditText addUsername = vista.findViewById(R.id.edtAddUsername);
+            TextInputEditText addPassword = vista.findViewById(R.id.edtAddPassword);
             EditText addCompany = vista.findViewById(R.id.edtAddCompany);
             EditText addAddress = vista.findViewById(R.id.edtAddAddress);
             EditText addWebsite = vista.findViewById(R.id.edtAddWebsite);
@@ -196,6 +209,7 @@ public class UserFragment extends Fragment {
                 if (!addName.getText().toString().isEmpty() && //validar campos vacios
                         !addEmail.getText().toString().isEmpty() &&
                         !addUsername.getText().toString().isEmpty() &&
+                        !addPassword.getText().toString().isEmpty() &&
                         !addCompany.getText().toString().isEmpty() &&
                         !addAddress.getText().toString().isEmpty() &&
                         !addWebsite.getText().toString().isEmpty() &&
@@ -213,13 +227,15 @@ public class UserFragment extends Fragment {
                     user.setName(addName.getText().toString());
                     user.setEmail(addEmail.getText().toString());
                     user.setUsername(addUsername.getText().toString());
+                    user.setPassword(addPassword.getText().toString());
                     user.setCompany(new User.Company(addCompany.getText().toString()));
                     user.setAddress(new User.Address(addAddress.getText().toString(), "", "", ""));
                     user.setWebsite(addWebsite.getText().toString());
                     user.setPhone(addPhone.getText().toString());
 
                     //update object in database and recycler
-                    MainActivity.dataBase.userDao().addUser(user);
+                    //LoginActivity.albumDataBase.userDao().addUser(user);
+                    albumDataBase.userDao().addUser(user);
                     listUser.add(user);
                     userAdapter.notifyItemInserted(listUser.size() - 1);
                     Toast.makeText(getContext(), "successful added", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,7 @@
 package com.mediomelon.demoalbum.presenter;
 
+import android.content.Context;
+
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.interactor.UserInteractor;
 import com.mediomelon.demoalbum.model.entity.User;
@@ -10,9 +12,9 @@ public class UserPresenter implements IUser.IPresenter {
     private IUser.IView userView;
     private IUser.IModel userInteractor;
 
-    public UserPresenter(IUser.IView userView) {
+    public UserPresenter(IUser.IView userView, Context context) {
         this.userView = userView;
-        userInteractor = new UserInteractor(this);
+        userInteractor = new UserInteractor(this, context);
     }
 
     @Override

@@ -4,14 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toolbar"
+    android:id="@+id/mtoolbar"
     android:layout_width="match_parent"
     android:elevation="4dp"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:theme="@style/AppTheme"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     android:layout_height="75dp"
-    android:background="@color/colorPrimary"
-    tools:context=".view.activity.MainActivity">
+    android:background="@color/colorPrimary">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

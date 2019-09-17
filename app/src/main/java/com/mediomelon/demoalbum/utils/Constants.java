@@ -1,4 +1,4 @@
-package com.mediomelon.demoalbum.util;
+package com.mediomelon.demoalbum.utils;
 
 import com.mediomelon.demoalbum.R;
 
@@ -18,7 +18,5 @@ public class Constants {
     public static final String TABLE_PHOTO = "PHOTOS";
 
     public static final String PASS_DEFAULT = "123456";
-
-
 
 }

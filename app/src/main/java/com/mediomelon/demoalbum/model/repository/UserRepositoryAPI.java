@@ -1,12 +1,13 @@
 package com.mediomelon.demoalbum.model.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.mediomelon.demoalbum.api.ServiceClient;
+import com.mediomelon.demoalbum.dao.AlbumDataBase;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.util.Constants;
-import com.mediomelon.demoalbum.view.activity.MainActivity;
+import com.mediomelon.demoalbum.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,9 +25,11 @@ public class UserRepositoryAPI implements IUser.IRepository {
     private static final String TAG = "UserRepositoryAPI";
     private ArrayList<User> listUser;
     private SimpleDateFormat sdf;
+    private AlbumDataBase albumDataBase;
 
-    public UserRepositoryAPI(IUser.IPresenter presenter) {
+    public UserRepositoryAPI(IUser.IPresenter presenter, Context context) {
         this.userPresenter = presenter;
+        albumDataBase = AlbumDataBase.getDataBase(context);
     }
 
     @Override
@@ -55,11 +58,11 @@ public class UserRepositoryAPI implements IUser.IRepository {
 //                        Log.e(TAG, "Image (drawable): " + user.getPhoto());
 
 
-                        User userId = MainActivity.dataBase.userDao().getUserById(user.getId());
+                        User userId = albumDataBase.userDao().getUserById(user.getId());
 
                         if (userId == null) {
                             //insertar en bd;
-                            MainActivity.dataBase.userDao().addUser(user);
+                            albumDataBase.userDao().addUser(user);
                             Log.e(TAG, " inserted: id: " + user.getId() + " " + user.getAddress().getCity() + " " + user.getCompany().getName() + " " + user.getName());
                             listUser.add(user);
                         }
@@ -93,7 +96,7 @@ public class UserRepositoryAPI implements IUser.IRepository {
 
     private void showUsers() {
         //mostrar bd
-        List<User> users = MainActivity.dataBase.userDao().getUsers();
+        List<User> users = albumDataBase.userDao().getUsers();
 
         for (User user : users) {
 

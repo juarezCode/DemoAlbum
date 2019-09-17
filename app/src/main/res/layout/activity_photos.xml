@@ -62,6 +62,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
+    <ImageView
+        android:id="@+id/imgNetworkError"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/ic_network_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/include3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewtitle"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <TextView
+        android:id="@+id/txtNetworkError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="No internet Connection"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgNetworkError" />
+
+    <Button
+        android:id="@+id/btnNetworkRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorAccent"
+        android:text="Retry"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNetworkError" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"

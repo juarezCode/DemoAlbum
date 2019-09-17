@@ -8,16 +8,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.room.Room;
-
 import com.mediomelon.demoalbum.R;
 import com.mediomelon.demoalbum.adapter.PhotoAdapter;
-import com.mediomelon.demoalbum.dao.DataBase;
 import com.mediomelon.demoalbum.interfaces.IPhotos;
 import com.mediomelon.demoalbum.model.entity.Photo;
 import com.mediomelon.demoalbum.presenter.PhotoPresenter;
@@ -42,6 +41,12 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
     ImageButton btnBack;
     @BindView(R.id.title_toolbar)
     TextView titleToolbar;
+    @BindView(R.id.imgNetworkError)
+    ImageView imgNetworkError;
+    @BindView(R.id.txtNetworkError)
+    TextView txtNetworkError;
+    @BindView(R.id.btnNetworkRetry)
+    Button btnNetworkRetry;
 
     String title;
 
@@ -54,7 +59,7 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
         ButterKnife.bind(this);
-        photosPresenter = new PhotoPresenter(this);
+        photosPresenter = new PhotoPresenter(this, getApplicationContext());
 
         btnBack.setVisibility(View.VISIBLE);
         titleToolbar.setText("Fotos");
@@ -74,6 +79,14 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
             startActivity(new Intent(getBaseContext(), MainActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
             finish();
+        });
+
+        btnNetworkRetry.setOnClickListener(v -> {
+            imgNetworkError.setVisibility(View.GONE);
+            txtNetworkError.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            btnNetworkRetry.setVisibility(View.GONE);
+            getPhotos(id);
         });
 
     }
@@ -98,6 +111,15 @@ public class PhotosActivity extends AppCompatActivity implements IPhotos.IView {
 
         listPhoto.addAll(photos);
         photoAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showErrorInternetConnection() {
+        //Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+        imgNetworkError.setVisibility(View.VISIBLE);
+        txtNetworkError.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        btnNetworkRetry.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -9,4 +9,6 @@
     <string name="fragment_users">Fragment users</string>
     <string name="cardviewUsers_name">Nombre</string>
     <string name="cardviewUsers_email">Email</string>
+    <string name="cerrar_sesion">cerrar sesion</string>
+    <string name="create_user">crear usuario</string>
 </resources>

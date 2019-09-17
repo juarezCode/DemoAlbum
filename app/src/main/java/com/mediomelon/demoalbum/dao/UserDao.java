@@ -6,7 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.util.Constants;
+import com.mediomelon.demoalbum.utils.Constants;
 
 import java.util.List;
 
@@ -20,6 +20,9 @@ public interface UserDao {
 
     @Query("SELECT * FROM USERS WHERE user_id IN (:id)")
     User getUserById(int id);
+
+    @Query("SELECT * FROM USERS WHERE user_username == (:username) AND user_status == 'Active'")
+    User getUserByUsername(String username);
 
     @Update
     void updateUser(User user);

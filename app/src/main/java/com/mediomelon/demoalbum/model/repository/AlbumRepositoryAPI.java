@@ -1,12 +1,14 @@
 package com.mediomelon.demoalbum.model.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.mediomelon.demoalbum.api.IAlbumService;
 import com.mediomelon.demoalbum.api.ServiceClient;
+import com.mediomelon.demoalbum.dao.AlbumDataBase;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.model.entity.Album;
-import com.mediomelon.demoalbum.view.activity.MainActivity;
+import com.mediomelon.demoalbum.view.activity.LoginActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,9 +25,11 @@ public class AlbumRepositoryAPI implements IAlbum.IRepository {
     private IAlbum.IPresenter albumPresenter;
     private ArrayList<Album> arrayListAlbum;
     private SimpleDateFormat sdf;
+    private AlbumDataBase albumDataBase;
 
-    public AlbumRepositoryAPI(IAlbum.IPresenter presenter) {
+    public AlbumRepositoryAPI(IAlbum.IPresenter presenter, Context context) {
         this.albumPresenter = presenter;
+        albumDataBase = AlbumDataBase.getDataBase(context);
     }
 
     @Override
@@ -49,14 +53,13 @@ public class AlbumRepositoryAPI implements IAlbum.IRepository {
                         album.setDate(currentDateandTime);
 
                         //consulta
-                        Album albumId = MainActivity.dataBase.albumDao().getAlbumId(album.getId());
+                        Album albumId = albumDataBase.albumDao().getAlbumId(album.getId());
 
                         if (albumId == null) {
                             //insertar en bd;
-                            MainActivity.dataBase.albumDao().addAlbum(album);
+                            albumDataBase.albumDao().addAlbum(album);
                             Log.e(TAG, " inserted: " + "id: " + album.getId() + " " + album.getUserId() + " " + album.getTitle());
                         }
-
                     }
                     //mostrar bd
                     showAlbums();
@@ -82,7 +85,7 @@ public class AlbumRepositoryAPI implements IAlbum.IRepository {
 
     private void showAlbums() {
         //mostrar bd
-        List<Album> albums = MainActivity.dataBase.albumDao().getAlbums();
+        List<Album> albums = albumDataBase.albumDao().getAlbums();
 
         for (Album album : albums) {
             int id = album.getId();

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.mediomelon.demoalbum.util.Constants;
+import com.mediomelon.demoalbum.utils.Constants;
 
 import org.jetbrains.annotations.NotNull;
 

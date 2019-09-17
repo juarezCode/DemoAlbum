@@ -19,6 +19,8 @@ public interface IPhotos {
 
         void showPhotos(ArrayList<Photo> photos);
 
+        void showErrorInternetConnection();
+
         void showErrorPhotos(String error);
     }
 
@@ -26,6 +28,8 @@ public interface IPhotos {
         void getPhotos(int albumId);
 
         void showPhotos(ArrayList<Photo> photos);
+
+        void showErrorInternetConnection();
 
         void showErrorPhotos(String error);
     }

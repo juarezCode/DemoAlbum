@@ -1,26 +1,27 @@
 package com.mediomelon.demoalbum.view.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.room.Room;
-
 import com.mediomelon.demoalbum.R;
-import com.mediomelon.demoalbum.dao.DataBase;
 import com.mediomelon.demoalbum.interfaces.IAlbum;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.Album;
 import com.mediomelon.demoalbum.model.entity.User;
 import com.mediomelon.demoalbum.presenter.AlbumPresenter;
 import com.mediomelon.demoalbum.presenter.UserPresenter;
-import com.mediomelon.demoalbum.util.Constants;
 import com.mediomelon.demoalbum.view.fragments.AlbumFragment;
 import com.mediomelon.demoalbum.view.fragments.UserFragment;
 
@@ -36,23 +37,28 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
     BottomNavigationView bottomNavigationView;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    //@BindView(R.id.toolbar)
-    //Toolbar toolbar;
+    @BindView(R.id.mtoolbar)
+    Toolbar toolbar;
+    SharedPreferences session;
+
 
     private static final String TAG = "MainActivity";
     private IUser.IPresenter userPresenter;
     private IAlbum.IPresenter albumPresenter;
     private Bundle args;
-    public static DataBase dataBase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        userPresenter = new UserPresenter(this);
-        albumPresenter = new AlbumPresenter(this);
-        dataBase = Room.databaseBuilder(this, DataBase.class, Constants.NAME_DB).allowMainThreadQueries().build();
+        //Toolbar toolbar = findViewById(R.id.mtoolbar);
+        setSupportActionBar(toolbar);
+        session = getSharedPreferences("session",MODE_PRIVATE);
+
+        userPresenter = new UserPresenter(this, getApplicationContext());
+        albumPresenter = new AlbumPresenter(this, getApplicationContext());
 
         //BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
@@ -140,10 +146,36 @@ public class MainActivity extends AppCompatActivity implements IUser.IView, IAlb
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.item_close_sesion) {
+            SharedPreferences.Editor editor = session.edit();
+            editor.clear();
+            editor.commit();
+            finish();
+            Toast.makeText(this, "closed session", Toast.LENGTH_SHORT).show();
+        }else if (itemId == R.id.item_other)
+            Toast.makeText(this,"other action", Toast.LENGTH_SHORT).show();
+
+
+        return super.onOptionsItemSelected(item);
+    }
     /*Inicializar el fragment por defecto Userfragment,
     e incializar el fragment cuando volvamos a esta pantalla
     desde DetailsUserActivity por el BottomNavigationView

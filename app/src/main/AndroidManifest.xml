@@ -3,6 +3,7 @@
     package="com.mediomelon.demoalbum">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,15 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.PhotosActivity"></activity>
-        <activity android:name=".view.activity.DetailUserActivity" />
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".view.activity.CreateUserActivity"></activity>
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.PhotosActivity" />
+        <activity android:name=".view.activity.DetailUserActivity" />
+        <activity android:name=".view.activity.MainActivity" />
     </application>
 
 </manifest>

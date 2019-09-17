@@ -1,8 +1,10 @@
 package com.mediomelon.demoalbum.model.repository;
 
+import android.content.Context;
+
+import com.mediomelon.demoalbum.dao.AlbumDataBase;
 import com.mediomelon.demoalbum.interfaces.IUser;
 import com.mediomelon.demoalbum.model.entity.User;
-import com.mediomelon.demoalbum.view.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +12,18 @@ import java.util.List;
 public class UserRepositoryDB implements IUser.IRepository {
 
     private IUser.IPresenter userPresenter;
+    private AlbumDataBase albumDataBase;
 
-    public UserRepositoryDB(IUser.IPresenter presenter) {
+    public UserRepositoryDB(IUser.IPresenter presenter, Context context) {
         this.userPresenter = presenter;
+        albumDataBase = AlbumDataBase.getDataBase(context);
     }
 
     @Override
     public void getUsers() {
         //mostrar bd
-        List<User> users = MainActivity.dataBase.userDao().getUsers();
+        //List<User> users = LoginActivity.albumDataBase.userDao().getUsers();
+        List<User> users = albumDataBase.userDao().getUsers();
 
 //        for (User user : users) {
 //            Log.e(TAG, "id: " + user.getId() + " " + user.getName() + " city: " + user.getAddress().getCity() + " company " + user.getCompany().getName());
